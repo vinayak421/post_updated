@@ -4,8 +4,10 @@ import 'package:post/model/Post.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:post/model/Sample.dart';
+
 class Comment extends StatefulWidget{
-   Post post;
+   Sample post;
 
    Comment(this.post);
 
@@ -22,25 +24,9 @@ class _Comment extends State<Comment>{
   void initState() {
     // TODO: implement initState
     super.initState();
-    fetchComment();
+
   }
 
-  void fetchComment() async {
-    print(widget.post.id);
-    var url = "https://jsonplaceholder.typicode.com/posts/${widget.post.id}/comments";
-    var response = await http.get(Uri.parse(url));
-    if(response.statusCode ==200){
-      print(response.body);
-      var array =jsonDecode(response.body);
-      for(var object in array){
-        setState(() {
-          comment++;
-        });
-
-      }
-      print('comment $comment');
-    }
-  }
 
 
 
@@ -53,10 +39,9 @@ class _Comment extends State<Comment>{
         child: Container(
             child:Column(
               children: [
-                Text(widget.post.title),
                 InkWell(
                     child: Text(widget.post.body)),
-                Text('No.of Comments : ${comment.toString()}'),
+                Text('No.of Comments : ${widget.post.no_Of_comments.toString()}'),
               ],
             )
 

@@ -34,24 +34,49 @@ class _Post extends State<Post>{
                     itemCount: controller.items.length,
                     itemBuilder: (BuildContext context ,int index)
                         {
-                          return Container(
+                          return Card(
                             child:Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(controller.items[index].title,style: TextStyle(
-                                  fontWeight: FontWeight.bold
-                                ),),
-                                SizedBox(
-                                  height: 20.0,
+
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(20.0, 20.0, 0.0, 20.0),
+                                  child: CircleAvatar(
+                                  backgroundColor: Colors.blueAccent,
+                                  radius: 30.0,
+                                  child: Text(getInitials(controller.items[index].name), style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16.0),)),
                                 ),
+
                                 InkWell(
                                     onTap: (){
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(builder: (context) => Comment(controller.items[index])));
                                     },
-                                    child: Text(controller.items[index].body)),
+                                    child: Container(
+                                        margin: EdgeInsets.fromLTRB(20.0, 20.0, 0.0, 20.0),
+                                        child: Text(controller.items[index].body))),
 
-                                Divider(thickness: 2,color: Colors.grey,height: 1,)
+
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(20.0, 20.0, 0.0, 20.0),
+                                  child: Row(
+                                    children: [
+                                      Text('Comments ')
+                                      ,
+                                      CircleAvatar(
+                                          backgroundColor: Colors.greenAccent,
+                                          radius: 15.0,
+                                          child: new Text(controller.items[index].no_Of_comments.toString(), style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 16.0),)),
+
+
+                                    ],
+
+                                  ),
+                                ),
+                                Divider(thickness: 2,color: Colors.grey,height: 1,),
+
                               ],
                             )
 
@@ -67,5 +92,9 @@ class _Post extends State<Post>{
       ),
     );
   }
+
+  String getInitials(String name) => name.isNotEmpty
+      ? name.trim().split(RegExp(' +')).map((s) => s[0]).take(2).join()
+      : '';
 
 }
