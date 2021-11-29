@@ -16,6 +16,7 @@ class _Post extends State<Post>{
   void initState() {
     // TODO: implement initState
     super.initState();
+    print('coming  32323 ${controller.items.length}');
   }
 
 
@@ -23,30 +24,46 @@ class _Post extends State<Post>{
 
   @override
   Widget build(BuildContext context) {
+    print('coming  3232 ${controller.items.length}');
     return Scaffold(
-      body: Container(
-          child: ListView.builder(
-              itemCount: controller.items.length,
-              itemBuilder: (BuildContext context ,int index)
-                  {
-                    return Container(
-                      child:Column(
-                        children: [
-                          Text(controller.items[index].title),
-                          InkWell(
-                              onTap: (){
-                                Get.to(Comment(controller.items[index]));
-                              },
-                              child: Text(controller.items[index].body)),
-                        ],
-                      )
+      body: SafeArea(
+        child: Container(
+            child: GetX<PostList>(
+              builder: (controller) {
+                return ListView.builder(
+                    itemCount: controller.items.length,
+                    itemBuilder: (BuildContext context ,int index)
+                        {
+                          return Container(
+                            child:Column(
+                              children: [
+                                Text(controller.items[index].title,style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                                ),),
+                                SizedBox(
+                                  height: 20.0,
+                                ),
+                                InkWell(
+                                    onTap: (){
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Comment(controller.items[index])));
+                                    },
+                                    child: Text(controller.items[index].body)),
+
+                                Divider(thickness: 2,color: Colors.grey,height: 1,)
+                              ],
+                            )
 
 
-                    );
-                  }
+                          );
+                        }
 
-          ),
+                );
+              }
+            ),
 
+        ),
       ),
     );
   }

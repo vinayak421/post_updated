@@ -8,7 +8,7 @@ import 'dart:convert';
 
 
 class PostList extends GetxController {
-  List<Post> items = List<Post>.obs;
+  var items = <Post>[].obs;
   List<Post> list = [];
 
   @override
@@ -27,9 +27,13 @@ class PostList extends GetxController {
         for(var object in array){
           Post post = Post(userId:object['userId'], id:object['id'],title:object['title'] ,body:object['body'] );
           list.add(post);
+          print('coming 12121212');
         }
+        print('coming  ${list.length}');
+
+        items.value = list;
       }
-               items = list;
+
     }
 
 

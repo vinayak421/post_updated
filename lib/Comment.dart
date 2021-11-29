@@ -26,14 +26,19 @@ class _Comment extends State<Comment>{
   }
 
   void fetchComment() async {
+    print(widget.post.id);
     var url = "https://jsonplaceholder.typicode.com/posts/${widget.post.id}/comments";
     var response = await http.get(Uri.parse(url));
     if(response.statusCode ==200){
       print(response.body);
       var array =jsonDecode(response.body);
       for(var object in array){
-         comment++;
+        setState(() {
+          comment++;
+        });
+
       }
+      print('comment $comment');
     }
   }
 
@@ -43,17 +48,21 @@ class _Comment extends State<Comment>{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Container(
-        child:Column(
-          children: [
-            Text(widget.post.title),
-            InkWell(
-                child: Text(widget.post.body)),
-            Text(comment.toString()),
-          ],
-        )
+    return Scaffold(
+      body: SafeArea(
+        child: Container(
+            child:Column(
+              children: [
+                Text(widget.post.title),
+                InkWell(
+                    child: Text(widget.post.body)),
+                Text('No.of Comments : ${comment.toString()}'),
+              ],
+            )
 
 
+        ),
+      ),
     );
   }
 
